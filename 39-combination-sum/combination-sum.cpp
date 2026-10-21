@@ -1,35 +1,38 @@
 class Solution {
 public:
+    vector<vector<int>> ans;
+    
+    void solve(vector<int>& candidates, int target, int index,
+               vector<int>& temp) {
+        
+        // Target achieved
+        if (target == 0) {
+            ans.push_back(temp);
+            return;
+        }
+
+        // Target becomes negative
+        if (target < 0) {
+            return;
+        }
+
+        for (int i = index; i < candidates.size(); i++) {
+            
+            // Choose
+            temp.push_back(candidates[i]);
+
+            // We pass i, not i+1
+            // because the same number can be used again
+            solve(candidates, target - candidates[i], i, temp);
+
+            // Backtrack
+            temp.pop_back();
+        }
+    }
+
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-
-        vector<vector<int>> ans;
-        vector<int>  temp;
-
-        function<void(int, int)> solve  =[&] ( int start, int target){
-
-            if( target == 0){
-                ans.push_back(temp);
-                return ;
-            }
-
-            if( target < 0){
-                return;
-
-            }
-
-            for( int i = start ; i < candidates.size(); i++){
-
-                temp.push_back(candidates[i]);
-
-                solve(i, target - candidates[i]);
-
-                temp.pop_back();
-            }
-        };
-
-        solve(0, target);
-
+        vector<int> temp;
+        solve(candidates, target, 0, temp);
         return ans;
-           
     }
 };
