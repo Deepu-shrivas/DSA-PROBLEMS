@@ -15,14 +15,14 @@ public:
        dfs(i+1,j, vis,grid,n,m);// bottom
   }
     int numIslands(vector<vector<char>>& grid) {
-        int   islands =0;
+        int islands =0;
         int n = grid.size();
         int m = grid[0].size();
 
   vector<vector<bool>> vis(n,vector<bool>(m, false));
 
-        for( int i=0; i<n ;i++){
-            for( int j=0; j<m ;j++){
+        for( int i=0; i<n ;i++){   // innner loop
+            for( int j=0; j<m ;j++){  // outer loop
                 if(grid[i][j] == '1' && !vis[i][j]){
                     dfs(i,j,vis, grid, n,m);  //visit only one component at a time
                     islands++; 
